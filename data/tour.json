@@ -1,0 +1,49 @@
+{
+    "default": {
+        "firstScene": "halaman_depan",
+        "author": "Kampus Virtual",
+        "sceneFadeDuration": 1000,
+        "autoLoad": true,
+        "hfov": 100,
+        "minHfov": 50,
+        "maxHfov": 120,
+        "compass": true,
+        "hotSpotDebug": true
+    },
+    "scenes": {
+        "halaman_depan": {
+            "title": "Halaman Depan",
+            "type": "equirectangular",
+            "panorama": "assets/img/pano1.jpg",
+            "hotSpots": [
+                {
+                    "pitch": -20,
+                    "yaw": 0,
+                    "type": "scene",
+                    "text": "Gerbang Belakang Kampus",
+                    "sceneId": "area_kedua",
+                    "targetYaw": 0,
+                    "targetPitch": 0
+                }
+            ]
+        },
+        "area_kedua": {
+            "title": "Area Kedua (Pano 2)",
+            "type": "equirectangular",
+            "panorama": "assets/img/pano2.jpg",
+            "hotSpots": [
+                {
+                    "pitch": -3.6722157320964266,
+                    "yaw": 151.45541303855993,
+                    "Center Pitch": 0.49886054575876937,
+                    "Center Yaw": 150.74459842305083,
+                    "type": "scene",
+                    "text": "Kembali ke Gedung Utama Kampus",
+                    "sceneId": "halaman_depan",
+                    "targetYaw": 174.33505612517322,
+                    "targetPitch": -59.289000560914445
+                }
+            ]
+        }
+    }
+}
