@@ -1,47 +1,65 @@
 {
     "default": {
-        "firstScene": "halaman_depan",
-        "author": "Kampus Virtual",
+        "firstScene": "pano1",
+        "author": "Virtual Tour Admin",
         "sceneFadeDuration": 1000,
         "autoLoad": true,
-        "hfov": 100,
-        "minHfov": 50,
-        "maxHfov": 120,
         "compass": true,
         "hotSpotDebug": true
     },
     "scenes": {
-        "halaman_depan": {
-            "title": "Halaman Depan",
+        "pano1": {
+            "title": "Kampus",
             "type": "equirectangular",
-            "panorama": "assets/img/pano1.jpg",
+            "panorama": "uploads\/pano1.jpg",
+            "pitch": -20,
+            "yaw": 0,
             "hotSpots": [
                 {
-                    "pitch": -20,
-                    "yaw": 0,
+                    "pitch": -18,
+                    "yaw": -1,
                     "type": "scene",
-                    "text": "Gerbang Belakang Kampus",
-                    "sceneId": "area_kedua",
-                    "targetYaw": 0,
-                    "targetPitch": 0
+                    "text": "Gerbang Belakang ITPLN",
+                    "sceneId": "pano2"
                 }
             ]
         },
-        "area_kedua": {
-            "title": "Area Kedua (Pano 2)",
+        "pano2": {
+            "title": "Gerbang Belakang",
             "type": "equirectangular",
-            "panorama": "assets/img/pano2.jpg",
+            "panorama": "uploads\/pano2.jpg",
+            "pitch": -3,
+            "yaw": 151,
             "hotSpots": [
                 {
-                    "pitch": -3.6722157320964266,
-                    "yaw": 151.45541303855993,
-                    "Center Pitch": 0.49886054575876937,
-                    "Center Yaw": 150.74459842305083,
+                    "pitch": -4,
+                    "yaw": 151,
                     "type": "scene",
-                    "text": "Kembali ke Gedung Utama Kampus",
-                    "sceneId": "halaman_depan",
-                    "targetYaw": 174.33505612517322,
-                    "targetPitch": -59.289000560914445
+                    "text": "Gedung Utama",
+                    "sceneId": "pano1"
+                },
+                {
+                    "pitch": -15,
+                    "yaw": 75,
+                    "type": "scene",
+                    "text": "Ke Jl.Raya Duri Kosambi",
+                    "sceneId": "pano3"
+                }
+            ]
+        },
+        "pano3": {
+            "title": "Jl.Raya Duri Kosambi",
+            "type": "equirectangular",
+            "panorama": "uploads\/pano3.jpg",
+            "pitch": 0,
+            "yaw": 0,
+            "hotSpots": [
+                {
+                    "pitch": -17,
+                    "yaw": -46,
+                    "type": "scene",
+                    "text": "Gerbang Belakang ITPLN",
+                    "sceneId": "pano2"
                 }
             ]
         }
