@@ -1,20 +1,14 @@
 <?php
-// dev.php - HIGH PRECISION UPDATE
+// dev.php - NO LOGIN VERSION
+require_once 'config.php';
+require_once 'includes/functions.php'; // Load helper
 
-$host = 'localhost';
-$user = 'root';
-$pass = ''; 
-$db   = 'virtual_tour';
-
-$conn = new mysqli($host, $user, $pass, $db);
-if ($conn->connect_error) { die("DB Gagal: " . $conn->connect_error); }
-
-$uploadDir = 'uploads/';
-if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
+if ($db_status !== 'connected') die("Database Gagal Terhubung. Cek config.php");
 
 $message = "";
+$jsonUpdated = false;
 
-// --- LOGIC HANDLING ---
+// --- LOGIC HANDLING (CRUD) ---
 
 // 1. TAMBAH SCENE
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'add_scene') {
@@ -33,13 +27,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             }
             
             $slug = "pano" . $counter;      
-            $dest_path = $uploadDir . $slug . "." . $ext; 
+            $dest_path = 'uploads/' . $slug . "." . $ext; 
+
+            if (!is_dir('uploads')) mkdir('uploads', 0777, true);
 
             if(move_uploaded_file($_FILES['panorama_img']['tmp_name'], $dest_path)) {
                 $sql = "INSERT INTO scenes (slug, title, image_path, initial_pitch, initial_yaw) 
                         VALUES ('$slug', '$judul', '$dest_path', $pitch, $yaw)";
-                if ($conn->query($sql)) $message = "✅ Scene $slug tersimpan.";
-                else $message = "❌ DB Error: " . $conn->error;
+                if ($conn->query($sql)) {
+                    $message = "✅ Scene $slug tersimpan.";
+                    $jsonUpdated = true; 
+                } else {
+                    $message = "❌ DB Error: " . $conn->error;
+                }
             } else {
                 $message = "❌ Gagal upload.";
             }
@@ -47,13 +47,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     }
 }
 
-// 2. TAMBAH HOTSPOT (NAVIGASI / INFO)
+// 2. TAMBAH HOTSPOT
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'add_hotspot') {
     $sourceId = (int) $_POST['source_id'];
     $text     = $conn->real_escape_string($_POST['text']);
     $hYaw     = (float) $_POST['h_yaw'];
     $hPitch   = (float) $_POST['h_pitch'];
-    $type     = $_POST['hotspot_type']; // scene atau info
+    $type     = $_POST['hotspot_type']; 
 
     if ($type === 'scene') {
         $targetId = (int) $_POST['target_id'];
@@ -75,6 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                                   VALUES ($targetId, '$slugSource', " . ($hPitch * -1) . ", $returnYaw, 'Kembali', 'scene')");
                 }
                 $message = "✅ Hotspot Navigasi berhasil.";
+                $jsonUpdated = true;
             }
         } else {
             $message = "❌ Scene Asal dan Tujuan harus dipilih.";
@@ -83,33 +84,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         if ($sourceId) {
             $sql = "INSERT INTO hotspots (scene_id, target_slug, pitch, yaw, text, type) 
                     VALUES ($sourceId, NULL, $hPitch, $hYaw, '$text', 'info')";
-            if($conn->query($sql)) $message = "✅ Info Hotspot berhasil.";
-            else $message = "❌ Gagal: " . $conn->error;
+            if($conn->query($sql)) {
+                $message = "✅ Info Hotspot berhasil.";
+                $jsonUpdated = true;
+            } else {
+                $message = "❌ Gagal: " . $conn->error;
+            }
         }
     }
 }
 
-// 3. UPDATE KOORDINAT SCENE
+// 3. UPDATE KOORDINAT
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_scene_view') {
     $id = (int)$_POST['scene_id'];
     $yaw = (float)$_POST['new_yaw'];
     $pitch = (float)$_POST['new_pitch'];
-    
     $conn->query("UPDATE scenes SET initial_yaw = $yaw, initial_pitch = $pitch WHERE id = $id");
-    $message = "✅ Tampilan awal Scene diperbarui.";
+    $message = "✅ Scene View Updated.";
+    $jsonUpdated = true;
 }
 
-// 4. UPDATE KOORDINAT HOTSPOT
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_hotspot_pos') {
     $id = (int)$_POST['hotspot_id'];
     $yaw = (float)$_POST['new_h_yaw'];
     $pitch = (float)$_POST['new_h_pitch'];
-    
     $conn->query("UPDATE hotspots SET yaw = $yaw, pitch = $pitch WHERE id = $id");
-    $message = "✅ Posisi Hotspot diperbarui.";
+    $message = "✅ Hotspot Pos Updated.";
+    $jsonUpdated = true;
 }
 
-// HAPUS DATA
+// DELETE HANDLING
 if (isset($_GET['delete_id'])) {
     $id = (int) $_GET['delete_id'];
     $res = $conn->query("SELECT image_path FROM scenes WHERE id=$id");
@@ -119,14 +123,25 @@ if (isset($_GET['delete_id'])) {
     }
     $conn->query("DELETE FROM hotspots WHERE scene_id=$id");
     $conn->query("DELETE FROM scenes WHERE id=$id");
+    regenerateTourJson($conn); 
     header("Location: dev.php"); exit;
 }
 if (isset($_GET['del_hotspot_id'])) {
     $conn->query("DELETE FROM hotspots WHERE id=" . (int)$_GET['del_hotspot_id']);
+    regenerateTourJson($conn); 
     header("Location: dev.php"); exit;
 }
 
-// LOAD DATA
+// --- JSON SYNC CHECK ---
+if ($jsonUpdated) {
+    if (regenerateTourJson($conn)) {
+        $message .= " (JSON Cache Updated)";
+    } else {
+        $message .= " (⚠️ Gagal Update JSON)";
+    }
+}
+
+// --- LOAD DATA FOR VIEW ---
 $scenes = [];
 $qScene = $conn->query("SELECT * FROM scenes ORDER BY id ASC");
 if ($qScene) {
@@ -249,7 +264,7 @@ if ($qScene) {
 </div>
 
 <div class="box">
-    <h3>Data & Edit Koordinat (High Precision)</h3>
+    <h3>Data & Edit Koordinat</h3>
     <?php if (empty($scenes)): ?>
         <p>Belum ada data.</p>
     <?php else: ?>

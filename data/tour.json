@@ -5,7 +5,7 @@
         "sceneFadeDuration": 1000,
         "autoLoad": true,
         "compass": true,
-        "hotSpotDebug": true
+        "hotSpotDebug": false
     },
     "scenes": {
         "pano1": {
@@ -51,7 +51,7 @@
             "title": "Jl.Raya Duri Kosambi",
             "type": "equirectangular",
             "panorama": "uploads\/pano3.jpg",
-            "pitch": -15,
+            "pitch": -16,
             "yaw": -69,
             "hotSpots": [
                 {
