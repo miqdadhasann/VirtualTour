@@ -28,8 +28,8 @@
             "title": "Gerbang Belakang",
             "type": "equirectangular",
             "panorama": "uploads\/pano2.jpg",
-            "pitch": -3,
-            "yaw": 151,
+            "pitch": -31,
+            "yaw": 35,
             "hotSpots": [
                 {
                     "pitch": -4,
@@ -51,8 +51,8 @@
             "title": "Jl.Raya Duri Kosambi",
             "type": "equirectangular",
             "panorama": "uploads\/pano3.jpg",
-            "pitch": 0,
-            "yaw": 0,
+            "pitch": -15,
+            "yaw": -69,
             "hotSpots": [
                 {
                     "pitch": -17,
@@ -60,6 +60,12 @@
                     "type": "scene",
                     "text": "Gerbang Belakang ITPLN",
                     "sceneId": "pano2"
+                },
+                {
+                    "pitch": -5,
+                    "yaw": -102,
+                    "type": "info",
+                    "text": "Gedung Utama ITPLN"
                 }
             ]
         }
