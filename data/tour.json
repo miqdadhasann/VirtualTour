@@ -1,0 +1,156 @@
+{
+    "default": {
+        "firstScene": "pano1",
+        "author": "Virtual Tour Admin",
+        "sceneFadeDuration": 1000,
+        "autoLoad": true,
+        "compass": true,
+        "hotSpotDebug": false
+    },
+    "scenes": {
+        "pano1": {
+            "title": "Kampus",
+            "type": "equirectangular",
+            "panorama": "uploads\/pano1.jpg",
+            "pitch": -20,
+            "yaw": 0,
+            "hotSpots": [
+                {
+                    "pitch": -18,
+                    "yaw": -1,
+                    "type": "scene",
+                    "text": "Gerbang Belakang ITPLN",
+                    "sceneId": "pano2"
+                }
+            ]
+        },
+        "pano2": {
+            "title": "Gerbang Belakang",
+            "type": "equirectangular",
+            "panorama": "uploads\/pano2.jpg",
+            "pitch": -31,
+            "yaw": 35,
+            "hotSpots": [
+                {
+                    "pitch": -4,
+                    "yaw": 151,
+                    "type": "scene",
+                    "text": "Gedung Utama",
+                    "sceneId": "pano1"
+                },
+                {
+                    "pitch": -15,
+                    "yaw": 75,
+                    "type": "scene",
+                    "text": "Ke Jl.Raya Duri Kosambi",
+                    "sceneId": "pano3"
+                },
+                {
+                    "pitch": -28,
+                    "yaw": -160,
+                    "type": "info",
+                    "text": "Palm Kost"
+                },
+                {
+                    "pitch": -47,
+                    "yaw": -155,
+                    "type": "info",
+                    "text": "HartoKost"
+                },
+                {
+                    "pitch": -41,
+                    "yaw": 39,
+                    "type": "info",
+                    "text": "Kost Depan Mushola"
+                }
+            ]
+        },
+        "pano3": {
+            "title": "Jl.Raya Duri Kosambi",
+            "type": "equirectangular",
+            "panorama": "uploads\/pano3.jpg",
+            "pitch": -16,
+            "yaw": -69,
+            "hotSpots": [
+                {
+                    "pitch": -17,
+                    "yaw": -46,
+                    "type": "scene",
+                    "text": "Gerbang Belakang ITPLN",
+                    "sceneId": "pano2"
+                },
+                {
+                    "pitch": -5,
+                    "yaw": -102,
+                    "type": "info",
+                    "text": "Gedung Utama ITPLN"
+                },
+                {
+                    "pitch": -27,
+                    "yaw": -147,
+                    "type": "info",
+                    "text": "Kost Alun"
+                },
+                {
+                    "pitch": -30,
+                    "yaw": -119,
+                    "type": "info",
+                    "text": "Kost Residence A8"
+                },
+                {
+                    "pitch": -32,
+                    "yaw": -161,
+                    "type": "info",
+                    "text": "Cadiash Kost"
+                },
+                {
+                    "pitch": -51,
+                    "yaw": 21,
+                    "type": "info",
+                    "text": "Kost Orange"
+                },
+                {
+                    "pitch": -64,
+                    "yaw": 32,
+                    "type": "info",
+                    "text": "Kost Goa"
+                },
+                {
+                    "pitch": -56,
+                    "yaw": 11,
+                    "type": "info",
+                    "text": "Kost Perempuan "
+                },
+                {
+                    "pitch": -10,
+                    "yaw": 155,
+                    "type": "scene",
+                    "text": "ke jalan raya kosambi 2",
+                    "sceneId": "pano4"
+                },
+                {
+                    "pitch": -47,
+                    "yaw": -18,
+                    "type": "info",
+                    "text": "helloroom"
+                }
+            ]
+        },
+        "pano4": {
+            "title": "jl.Raya Duri Kosambi 2",
+            "type": "equirectangular",
+            "panorama": "uploads\/pano4.jpg",
+            "pitch": -31,
+            "yaw": 50,
+            "hotSpots": [
+                {
+                    "pitch": -20,
+                    "yaw": -8,
+                    "type": "scene",
+                    "text": "Kembali",
+                    "sceneId": "pano3"
+                }
+            ]
+        }
+    }
+}

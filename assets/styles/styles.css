@@ -1,0 +1,32 @@
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body, html {
+            height: 100%;
+            width: 100%;
+            overflow: hidden; /* Mencegah scrollbar ganda */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Container Fullscreen */
+        #panorama {
+            width: 100%;
+            height: 100vh; /* Viewport Height 100% */
+            background-color: #000; /* Placeholder hitam saat loading */
+        }
+
+        /* Overlay Judul (Opsional - agar terlihat profesional) */
+        .tour-overlay {
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            z-index: 2; /* Di atas panorama */
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            pointer-events: none; /* Agar klik tembus ke panorama */
+            margin-left: 20px;
+        }
+        
+        .tour-overlay h1 { font-size: 1.2rem; margin-bottom: 5px; color: #333; }
+        .tour-overlay p { font-size: 0.9rem; color: #666; }
