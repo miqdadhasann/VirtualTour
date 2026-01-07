@@ -10,7 +10,7 @@ Sistem ini membutuhkan database MySQL agar bisa berjalan.
 
 ### Langkah 1: Download Database
 File master database (`.sql`) tersimpan di Google Drive. Silakan unduh melalui link berikut:  
-📂 **[Download Database SQL Disini](https://drive.google.com/drive/folders/1eUzx537Maoq8C_595g74DG49b7iantue?usp=drive_link)**
+📂 **[Download Database SQL Disini]([https://drive.google.com/drive/folders/1eUzx537Maoq8C_595g74DG49b7iantue?usp=drive_link](https://drive.google.com/file/d/1oa_6ii4eyaY9gy-Nd7uSjDlk_At_YWD5/view?usp=sharing))**
 
 ### Langkah 2: Import ke MySQL
 1. Buka **phpMyAdmin** (atau tools database lain).
